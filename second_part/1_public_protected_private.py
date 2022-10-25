@@ -174,3 +174,71 @@ class ObjList:
 
     def get_data(self):
         return self.__data
+
+
+#ex10
+import string
+import random
+
+class EmailValidator:
+    def __new__(cls):
+        return None
+
+    symbols = string.ascii_letters + string.digits + '._'
+
+    @staticmethod
+    def __is_email_str(email):
+        return True if isinstance(email, str) else False
+
+    @classmethod
+    def get_random_email(cls):
+        name = [random.choice(cls.symbols)]
+
+        for _ in range(random.randint(1, 99)):
+            symb = random.choice(cls.symbols)
+            if symb == name[-1] == '.':
+                continue
+            name.append(symb)
+
+        return ''.join(name)+'@gmail.com'
+
+    @classmethod
+    def check_email(cls, email: str):
+        if not cls.__is_email_str(email):
+            return False
+
+        email_parts = email.split('@')
+        if len(email_parts) != 2:
+            return False
+
+        front, end = email_parts
+        if len(front) > 100 or len(end) > 50:
+            return False
+
+        if cls.check_symbols(front, 0) < 0:
+            return False
+
+        if cls.check_symbols(end) < 0:
+            return False
+
+        return True
+
+    @classmethod
+    def check_symbols(cls, part, dot = None):
+        for i in range(len(part)):
+            symb = part[i]
+            if symb not in cls.symbols:
+                return -1
+            if symb == '.':
+                if dot and i - dot == 1:
+                    return -1
+                dot = i
+
+        if dot == None:
+            return -1
+
+        return dot
+
+
+res = EmailValidator.check_email("sc_lib@list.ru")
+res2 = EmailValidator.check_email("sc_lib@list_ru")
