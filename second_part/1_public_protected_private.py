@@ -1,4 +1,4 @@
-# ex3
+#ex3
 class Clock:
     def __init__(self) -> None:
         self.__time: int = 0
@@ -96,7 +96,6 @@ class Point:
         return self.__x, self.__y
 
 
-
 class Rectangle:
     def __init__(self, *args) -> None:
         if len(args) == 4:
@@ -106,7 +105,6 @@ class Rectangle:
         else:
             self.__sp = args[0]
             self.__ep = args[1]
-
 
     def set_coords(self, sp, ep):
         self.__sp = sp
@@ -120,4 +118,59 @@ class Rectangle:
             coords = self.get_coords(),
         ))
 
-rect = Rectangle(0, 0, 20, 34)
+
+#ex9
+class LinkedList:
+    def __init__(self, head = None, tail = None) -> None:
+        self.head = head
+        self.tail = tail
+
+    def add_obj(self, obj):
+        if self.tail:
+            self.tail.set_next(obj)
+            obj.set_prev(self.tail)
+            self.tail = obj
+        else:
+            self.head = self.tail = obj
+
+    def remove_obj(self):
+        if self.tail:
+            obj = self.tail.get_prev()
+            if not obj:
+                self.head = self.tail = obj
+            else:
+                obj.set_next(None)
+                self.tail = obj
+
+    def get_data(self):
+        res = []
+        obj = self.head
+        while obj:
+            res.append(obj.get_data())
+            obj = obj.get_next()
+        return res
+
+
+class ObjList:
+    def __init__(self, data: str, n = None, p = None) -> None:
+        self.__next = n
+        self.__prev = p
+        self.__data = data
+
+    def set_next(self, obj):
+        self.__next = obj
+
+    def set_prev(self, obj):
+        self.__prev = obj
+
+    def get_next(self):
+        return self.__next
+
+    def get_prev(self):
+        return self.__prev
+
+    def set_data(self, data):
+        self.__data = data
+
+    def get_data(self):
+        return self.__data
