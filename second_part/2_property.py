@@ -13,6 +13,115 @@ class Car:
             self.__model = model
 
 car = Car()
-car.model = 'T'
-print(car.model)
+car.model = 'Toyota'
 
+
+#ex5
+class WindowDlg:
+    def __init__(self, title, width, height) -> None:
+        self.__title = title
+        self.__width = width
+        self.__height = height
+
+    def show(self):
+        print("{title}: {width}, {height}".format(
+            title = self.__title,
+            width = self.__width,
+            height = self.__height,
+        ))
+
+    @property
+    def width(self):
+        return self.__width
+
+    @width.setter
+    def width(self, width):
+        if isinstance(width, int) and width in range(0, 10001):
+            self.__width = width
+            self.show()
+
+    @property
+    def height(self):
+        return self.__height
+
+    @height.setter
+    def height(self, height):
+        if isinstance(height, int) and height in range(0, 10001):
+            self.__height = height
+            self.show()
+
+
+wnd = WindowDlg('Диалог 1', 100, 50)
+
+
+#ex6
+class StackObj:
+    def __init__(self, data) -> None:
+        self.__data = data
+        self.__next = None
+
+    @property
+    def next(self):
+        return self.__next
+
+    @next.setter
+    def next(self, next):
+        if isinstance(next, StackObj):
+            self.__next = next
+        else:
+            self.__next = None
+
+    @property
+    def data(self):
+        return self.__data
+
+    @data.setter
+    def data(self, data):
+        if isinstance(data, str):
+            self.__data = data
+
+
+class Stack:
+    def __init__(self, top: StackObj = None) -> None:
+        self.top = top
+
+    def push(self, obj):
+        if not self.top:
+            self.top = obj
+        else:
+            end = self.top
+            while end.next:
+                end = self.top.next
+            end.next = obj
+
+    def pop(self):
+        end = self.top
+        if not end:
+            return None
+        if not end.next:
+            self.top = None
+            return end
+        while end.next and end.next.next:
+            end = self.top.next
+        res = end.next
+        end.next = None
+        return res
+
+
+    def get_data(self):
+        res = []
+        end = self.top
+        if not end:
+            return res
+        while end.next:
+            res.append(end.data)
+            end = self.top.next
+        res.append(end.data)
+        return res
+
+
+st = Stack()
+st.push(StackObj("obj1"))
+st.push(StackObj("obj2"))
+st.push(StackObj("obj3"))
+st.pop()
