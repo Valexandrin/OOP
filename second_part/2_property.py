@@ -125,3 +125,45 @@ st.push(StackObj("obj1"))
 st.push(StackObj("obj2"))
 st.push(StackObj("obj3"))
 st.pop()
+
+
+#ex7
+class RadiusVector2D:
+    MIN_COORD = -100
+    MAX_COORD = 1024
+
+    def __check_coord(cls, coord):
+        if not type(coord) in (int, float):
+            return False
+        if cls.MIN_COORD <= coord <= cls.MAX_COORD:
+            return True
+
+
+    @staticmethod
+    def norm2(vector):
+        return vector.x**2 + vector.y**2
+
+    def __init__(self, x, y) -> None:
+        self.__x = self.__y = 0
+        if self.__check_coord(x):
+            self.__x = x
+        if self.__check_coord(y):
+            self.__y = y
+
+    @property
+    def x(self):
+        return self.__x
+
+    @x.setter
+    def x(self, x):
+        if self.__check_coord(x):
+            self.__x = x
+
+    @property
+    def y(self):
+        return self.__y
+
+    @y.setter
+    def y(self, y):
+        if self.__check_coord(y):
+            self.__y = y
