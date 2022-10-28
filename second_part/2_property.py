@@ -225,3 +225,5 @@ DecisionTree.add_obj(TreeObj(-1, "безнадежен"), v_12, False)
 
 x = [1, 1, 0]
 res = DecisionTree.predict(root, x)
+
+#ex9
