@@ -268,3 +268,34 @@ class PathLines:
         if self.path:
             line.set_start(*self.path[-1].end)
         self.path.append(line)
+
+
+#ex10
+class PhoneNumber:
+    def __init__(self, number, fio) -> None:
+        if self.check_number(number) and self.check_fio(fio):
+            self.number, self.fio = number, fio
+
+    @staticmethod
+    def check_number(number: int):
+        return isinstance(number, int) and len(str(number)) == 11
+
+    @staticmethod
+    def check_fio(fio):
+        return isinstance(fio, str)
+
+
+class PhoneBook:
+    def __init__(self) -> None:
+        self.list: List[PhoneNumber] = []
+
+    def add_phone(self, phone):
+        if phone:
+            self.list.append(phone)
+
+    def remove_phone(self, indx):
+        if isinstance(indx, int) and len(self.list) >= indx:
+            self.list.pop(indx)
+
+    def get_phone_list(self):
+        return self.list
