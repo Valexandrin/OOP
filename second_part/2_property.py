@@ -225,3 +225,77 @@ DecisionTree.add_obj(TreeObj(-1, "безнадежен"), v_12, False)
 
 x = [1, 1, 0]
 res = DecisionTree.predict(root, x)
+
+#ex9
+from math import sqrt, pow
+from typing import List
+
+class LineTo:
+    def __init__(self, x, y) -> None:
+        if self.check_coord(x) and self.check_coord(y):
+            self.x, self.y = x, y
+            self.x0 = self.y0 = 0
+
+    @staticmethod
+    def check_coord(coord):
+        return type(coord) in (int, float)
+
+    @property
+    def length(self):
+        return sqrt(pow(self.x-self.x0, 2) + pow(self.y-self.y0, 2))
+
+    @property
+    def end(self):
+        return self.x, self.y
+
+    def set_start(self, *args):
+        self.x0, self.y0 = args
+
+
+class PathLines:
+    def __init__(self, *args) -> None:
+        self.path: List[LineTo] = []
+        for i in args:
+            self.add_line(i)
+
+    def get_path(self):
+        return self.path
+
+    def get_length(self):
+        return sum([i.length for i in self.path])
+
+    def add_line(self, line: LineTo):
+        if self.path:
+            line.set_start(*self.path[-1].end)
+        self.path.append(line)
+
+
+#ex10
+class PhoneNumber:
+    def __init__(self, number, fio) -> None:
+        if self.check_number(number) and self.check_fio(fio):
+            self.number, self.fio = number, fio
+
+    @staticmethod
+    def check_number(number: int):
+        return isinstance(number, int) and len(str(number)) == 11
+
+    @staticmethod
+    def check_fio(fio):
+        return isinstance(fio, str)
+
+
+class PhoneBook:
+    def __init__(self) -> None:
+        self.list: List[PhoneNumber] = []
+
+    def add_phone(self, phone):
+        if phone:
+            self.list.append(phone)
+
+    def remove_phone(self, indx):
+        if isinstance(indx, int) and len(self.list) >= indx:
+            self.list.pop(indx)
+
+    def get_phone_list(self):
+        return self.list
