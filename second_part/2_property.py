@@ -227,3 +227,44 @@ x = [1, 1, 0]
 res = DecisionTree.predict(root, x)
 
 #ex9
+from math import sqrt, pow
+from typing import List
+
+class LineTo:
+    def __init__(self, x, y) -> None:
+        if self.check_coord(x) and self.check_coord(y):
+            self.x, self.y = x, y
+            self.x0 = self.y0 = 0
+
+    @staticmethod
+    def check_coord(coord):
+        return type(coord) in (int, float)
+
+    @property
+    def length(self):
+        return sqrt(pow(self.x-self.x0, 2) + pow(self.y-self.y0, 2))
+
+    @property
+    def end(self):
+        return self.x, self.y
+
+    def set_start(self, *args):
+        self.x0, self.y0 = args
+
+
+class PathLines:
+    def __init__(self, *args) -> None:
+        self.path: List[LineTo] = []
+        for i in args:
+            self.add_line(i)
+
+    def get_path(self):
+        return self.path
+
+    def get_length(self):
+        return sum([i.length for i in self.path])
+
+    def add_line(self, line: LineTo):
+        if self.path:
+            line.set_start(*self.path[-1].end)
+        self.path.append(line)
